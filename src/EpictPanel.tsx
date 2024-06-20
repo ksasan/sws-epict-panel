@@ -138,7 +138,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, onOptionsChange, w
           >
             {/*do not add href on the link while in edit mode because this will prevent the dragging of the box*/}
             <a
-              {...(oneBox.url && !isEditMode() ? { href: getTemplateSrv().replace(oneBox.url) } : null)}
+              {...(oneBox.url && !isEditMode() ? { href: getHref(oneBox) } : null)}
               className={cx(
                 styles.boxLink,
                 oneBox.url
@@ -398,6 +398,10 @@ export const SimplePanel: React.FC<Props> = ({ options, data, onOptionsChange, w
   function onBoxMouseUp() {
     $(document).unbind('mouseup', boxMouseUpHandler.bind(boxMouseUpHandler));
     isDrag = false;
+  }
+
+  function getHref(oneBox: Box): string {
+    return getTemplateSrv().replace(oneBox.url) + getBoxText(oneBox);
   }
 
   function getBoxValue(serieName: string, decimals: number): string {
